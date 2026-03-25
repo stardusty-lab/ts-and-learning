@@ -58,7 +58,7 @@ export function logPerson(person: Person) {
     );
 }
 
-export function filterPersons(persons: Person[], personType: Person['type'], criteria: Partial<Admin> | Partial<User>): (User | Admin)[] {
+export function filterPersons(persons: Person[], personType: Person['type'], criteria: Partial<typeof personType extends 'admin'? Admin : User>): (User | Admin)[] {
     return persons
         .filter((person) => person.type === personType)
         .filter((person) => {
