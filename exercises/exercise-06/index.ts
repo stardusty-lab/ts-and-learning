@@ -58,11 +58,11 @@ export function logPerson(person: Person) {
     );
 }
 
-export function filterPersons(persons: Person[], personType: string, criteria: unknown): unknown[] {
+export function filterPersons(persons: Person[], personType: Person['type'], criteria: Partial<Admin> | Partial<User>): (User | Admin)[] {
     return persons
         .filter((person) => person.type === personType)
         .filter((person) => {
-            let criteriaKeys = Object.keys(criteria) as (keyof Person)[];
+            let criteriaKeys = Object.keys(criteria) as (keyof typeof criteria)[];
             return criteriaKeys.every((fieldName) => {
                 return person[fieldName] === criteria[fieldName];
             });
