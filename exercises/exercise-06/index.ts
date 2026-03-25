@@ -57,8 +57,9 @@ export function logPerson(person: Person) {
         ` - ${person.name}, ${person.age}, ${person.type === 'admin' ? person.role : person.occupation}`
     );
 }
-
-export function filterPersons(persons: Person[], personType: Person['type'], criteria: Partial<typeof personType extends 'admin'? Admin : User>): (User | Admin)[] {
+export function filterPersons(persons: Person[], personType: Admin['type'], criteria: Partial<Admin>): Admin[];
+export function filterPersons(persons: Person[], personType: User['type'], criteria: Partial<User>): User[];
+export function filterPersons(persons: Person[], personType: Person['type'], criteria: Partial<Person>): (Person)[] {
     return persons
         .filter((person) => person.type === personType)
         .filter((person) => {
