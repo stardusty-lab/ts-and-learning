@@ -57,13 +57,18 @@ export function logPerson(person: Person) {
         ` - ${person.name}, ${person.age}, ${person.type === 'admin' ? person.role : person.occupation}`
     );
 }
+
+function getObjectKeys<T extends Object>(criteria: T){
+    return Object.keys(criteria) as (keyof T)[];
+}
+
 export function filterPersons(persons: Person[], personType: Admin['type'], criteria: Omit<Partial<Admin>, 'type'>): Admin[];
 export function filterPersons(persons: Person[], personType: User['type'], criteria: Omit<Partial<User>, 'type'>): User[];
 export function filterPersons(persons: Person[], personType: Person['type'], criteria: Omit<Partial<Person>, 'type'>): (Person)[] {
     return persons
         .filter((person) => person.type === personType)
         .filter((person) => {
-            let criteriaKeys = Object.keys(criteria) as (keyof typeof criteria)[];
+            let criteriaKeys = getObjectKeys(criteria);
             return criteriaKeys.every((fieldName) => {
                 return person[fieldName] === criteria[fieldName];
             });
