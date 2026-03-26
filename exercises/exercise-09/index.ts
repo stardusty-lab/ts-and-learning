@@ -53,14 +53,17 @@ const users: User[] = [
     { type: 'user', name: 'Kate Müller', age: 23, occupation: 'Astronaut' }
 ];
 
-export type ApiResponse<T = unknown> = {
+type ApiResponseSuccess<T = unknown> = {
     status: 'success';
     data: T;
-} |
-{
+}
+
+type ApiResponseError = {
     status: 'error';
     error: string;
 };
+
+export type ApiResponse<T = unknown> = ApiResponseSuccess<T> | ApiResponseError;
 
 type AdminsApiResponse = ApiResponse<Admin[]>;
 
